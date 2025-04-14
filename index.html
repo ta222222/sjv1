@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦅 sj site v1 💨</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .video-wrapper {
+            width: 100%;
+            max-width: 960px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        #player {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #000;
+        }
+        
+        @media (max-width: 768px) {
+            .video-wrapper {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .video-wrapper {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-wrapper">
+        <div id="player"></div>
+    </div>
+
+    <script>
+        // Load the IFrame Player API code asynchronously
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Create a YouTube player after the API code downloads
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: '-R38JqMHK8A',
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,
+                    'modestbranding': 1,
+                    'rel': 0
+                },
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerStateChange(event) {
+            // When video ends, prevent related videos from showing
+            if (event.data == YT.PlayerState.ENDED) {
+                player.stopVideo();
+            }
+        }
+    </script>
+</body>
+</html>
